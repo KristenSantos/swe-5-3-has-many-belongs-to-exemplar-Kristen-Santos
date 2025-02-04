@@ -126,3 +126,4 @@ The `ShoppingCart` class should have the following `static` methods:
 
 - `listAll()`: returns a copy of the array of all `ShoppingCart` instances
 - `findBy(id)`: returns the `ShoppingCart` instance with the given `id`
+
