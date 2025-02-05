@@ -6,6 +6,10 @@ class ShoppingCart {
   // Best Practice: Keep the property private to ensure it's only accessible through class methods,
   // encapsulating the management of all cart instances.
   static #allCarts = [];
+
+  // Private property to store cart items for this instance.
+  #cartItems;
+
   constructor() {
     this.id = getId();
 
@@ -17,13 +21,9 @@ class ShoppingCart {
     ShoppingCart.#allCarts.push(this);
   }
 
-  // Private property to store cart items for this instance.
-  #cartItems;
-
   // Static method to return all ShoppingCart instances.
   static listAll() {
-    // Best Practice:  Return a shallow copy of the cartItems array to protect the original data from being modified
-    // to the private #allCarts array, maintaining data integrity.
+    // Best Practice:  Return a shallow copy of the private #allCarts array, maintaining data integrity.
     return [...this.#allCarts];
   }
 
@@ -36,7 +36,7 @@ class ShoppingCart {
 
   // Method to create a new CartItem and add it to the cart.
   createItem(name, price) {
-    // to avoid creating invalid CartItem objects.
+    // Using the CartItem class helps to create consistent CartItem objects.
     const newItem = new CartItem(name, price);
 
     // Add the new item to the private cartItems array.
@@ -50,8 +50,9 @@ class ShoppingCart {
   }
 
   removeItem(id) {
-    /*Best Practice: Use Array.filter to create a new array that excludes the item with the matching ID. 
-    This ensures the immutability of the original array logic.*/
+    /*
+    Best Practice: Use Array.filter to create a new array that excludes the item with the matching ID. This ensures the immutability of the original array.
+    Note: You could also use findIndex and splice, but this approach mutates the original array and requires more steps.*/
     this.#cartItems = this.#cartItems.filter((item) => item.id !== id);
   }
 
